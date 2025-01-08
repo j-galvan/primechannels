@@ -1,2 +1,229 @@
-<center><h1>Amazon Prime Channels</h1></center>
-<hr>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --text-color: #1f2937;
+            --bg-color: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .language-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .language-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            font-size: 1.2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .card-button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo" data-en="Our Links" data-es="Nuestros Enlaces">Nuestros Enlaces</h1>
+            <div class="language-selector">
+                <button class="language-btn active" data-lang="es">ES</button>
+                <button class="language-btn" data-lang="en">EN</button>
+            </div>
+        </header>
+
+        <p class="description" data-en="Discover our carefully curated collection of amazing resources and tools that will help you achieve your goals." data-es="Descubre nuestra colección cuidadosamente seleccionada de increíbles recursos y herramientas que te ayudarán a alcanzar tus objetivos.">
+            Descubre nuestra colección cuidadosamente seleccionada de increíbles recursos y herramientas que te ayudarán a alcanzar tus objetivos.
+        </p>
+
+        <div class="grid">
+            <!-- Las cards se generarán dinámicamente con JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Datos de ejemplo para las cards (simulando una base de datos)
+        const cardsData = [
+            {
+                image: "/api/placeholder/400/225",
+                title: {
+                    es: "Recurso 1",
+                    en: "Resource 1"
+                },
+                description: {
+                    es: "Una breve descripción del primer recurso y sus beneficios.",
+                    en: "A brief description of the first resource and its benefits."
+                },
+                link: "#"
+            },
+            // Repetir para generar 21 cards (3x7)
+        ];
+
+        // Generar cards dinámicamente
+        function generateCards() {
+            const grid = document.querySelector('.grid');
+            const currentLang = document.querySelector('.language-btn.active').dataset.lang;
+
+            // Generar 21 cards (3x7)
+            for (let i = 0; i < 21; i++) {
+                const template = `
+                    <div class="card">
+                        <img src="/api/placeholder/400/225" alt="Resource ${i + 1}">
+                        <div class="card-content">
+                            <h2 class="card-title" data-en="Resource ${i + 1}" data-es="Recurso ${i + 1}">
+                                ${currentLang === 'es' ? `Recurso ${i + 1}` : `Resource ${i + 1}`}
+                            </h2>
+                            <p class="card-description" data-en="Description of resource ${i + 1} in English" data-es="Descripción del recurso ${i + 1} en español">
+                                ${currentLang === 'es' ? 
+                                    `Descripción del recurso ${i + 1} en español` : 
+                                    `Description of resource ${i + 1} in English`}
+                            </p>
+                            <a href="#" class="card-button" data-en="Learn More" data-es="Saber Más">
+                                ${currentLang === 'es' ? 'Saber Más' : 'Learn More'}
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += template;
+            }
+        }
+
+        // Cambiar idioma
+        function switchLanguage(lang) {
+            document.querySelectorAll('[data-' + lang + ']').forEach(element => {
+                element.textContent = element.dataset[lang];
+            });
+        }
+
+        // Event listeners
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Actualizar botones
+                document.querySelector('.language-btn.active').classList.remove('active');
+                btn.classList.add('active');
+
+                // Cambiar idioma
+                const lang = btn.dataset.lang;
+                switchLanguage(lang);
+            });
+        });
+
+        // Inicializar la página
+        generateCards();
+    </script>
+</body>
+</html>
