@@ -69,41 +69,50 @@
             gap: 2rem;
         }
 
-        .card {
-            background: white;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            transition: transform 0.3s ease;
-        }
+/* Modificar la card para usar flexbox */
+.card {
+    /* Mantener los estilos existentes y añadir: */
+    display: flex;
+    flex-direction: column;
+}
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
+/* Añadir este nuevo contenedor de imagen después de .card:hover */
+.card-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    overflow: hidden;
+}
 
-        .card img {
-            width: 100%;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-        }
+/* Modificar los estilos de la imagen */
+.card img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
 
-        .card-content {
-            padding: 1.5rem;
-        }
+/* Modificar el contenido de la card */
+.card-content {
+    /* Mantener el padding existente y añadir: */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
+/* Modificar la descripción */
+.card-description {
+    /* Mantener los estilos existentes y añadir: */
+    flex-grow: 1;
+}
 
-        .card-description {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 1rem;
-        }
-
-        .card-button {
+/* Modificar el botón */
+.card-button {
+    /* Mantener los estilos existentes y añadir: */
+    margin-top: auto;
             display: block;
             width: 100%;
             padding: 0.75rem;
@@ -218,21 +227,23 @@
 
             resources.forEach(resource => {
                 const template = `
-                    <div class="card">
-                        <img src="${resource.imageUrl}" alt="${resource.title[currentLang]}">
-                        <div class="card-content">
-                            <h2 class="card-title" data-en="${resource.title.en}" data-es="${resource.title.es}">
-                                ${resource.title[currentLang]}
-                            </h2>
-                            <p class="card-description" data-en="${resource.description.en}" data-es="${resource.description.es}">
-                                ${resource.description[currentLang]}
-                            </p>
-                            <a href="${resource.link}" class="card-button" data-en="${resource.buttonText.en}" data-es="${resource.buttonText.es}">
-                                ${resource.buttonText[currentLang]}
-                            </a>
-                        </div>
-                    </div>
-                `;
+    <div class="card">
+        <div class="card-image-container">
+            <img src="${resource.imageUrl}" alt="${resource.title[currentLang]}">
+        </div>
+        <div class="card-content">
+            <h2 class="card-title" data-en="${resource.title.en}" data-es="${resource.title.es}">
+                ${resource.title[currentLang]}
+            </h2>
+            <p class="card-description" data-en="${resource.description.en}" data-es="${resource.description.es}">
+                ${resource.description[currentLang]}
+            </p>
+            <a href="${resource.link}" class="card-button" data-en="${resource.buttonText.en}" data-es="${resource.buttonText.es}">
+                ${resource.buttonText[currentLang]}
+            </a>
+        </div>
+    </div>
+`;
                 grid.innerHTML += template;
             });
         }
