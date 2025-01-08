@@ -156,50 +156,86 @@
     </div>
 
     <script>
-        // Datos de ejemplo para las cards (simulando una base de datos)
-        const cardsData = [
+        // Datos de los recursos
+        // Para añadir un nuevo recurso, simplemente agrega un nuevo objeto al array
+        const resources = [
             {
-                image: "/api/placeholder/400/225",
+                imageUrl: "/api/placeholder/400/225",
                 title: {
-                    es: "Recurso 1",
-                    en: "Resource 1"
+                    es: "Tutorial de JavaScript",
+                    en: "JavaScript Tutorial"
                 },
                 description: {
-                    es: "Una breve descripción del primer recurso y sus beneficios.",
-                    en: "A brief description of the first resource and its benefits."
+                    es: "Aprende JavaScript desde cero con nuestro curso completo para principiantes.",
+                    en: "Learn JavaScript from scratch with our complete beginner's course."
                 },
-                link: "#"
+                buttonText: {
+                    es: "Comenzar Tutorial",
+                    en: "Start Tutorial"
+                },
+                link: "https://example.com/tutorial"
             },
-            // Repetir para generar 21 cards (3x7)
+            {
+                imageUrl: "/api/placeholder/400/225",
+                title: {
+                    es: "Herramientas de Desarrollo",
+                    en: "Development Tools"
+                },
+                description: {
+                    es: "Descubre las mejores herramientas para optimizar tu flujo de trabajo.",
+                    en: "Discover the best tools to optimize your workflow."
+                },
+                buttonText: {
+                    es: "Ver Herramientas",
+                    en: "View Tools"
+                },
+                link: "https://example.com/tools"
+            },
+            {
+                imageUrl: "/api/placeholder/400/225",
+                title: {
+                    es: "Recursos de Diseño",
+                    en: "Design Resources"
+                },
+                description: {
+                    es: "Accede a nuestra biblioteca de recursos de diseño UI/UX.",
+                    en: "Access our library of UI/UX design resources."
+                },
+                buttonText: {
+                    es: "Explorar Recursos",
+                    en: "Explore Resources"
+                },
+                link: "https://example.com/design"
+            }
+            // Añade más recursos aquí siguiendo el mismo formato
         ];
 
         // Generar cards dinámicamente
         function generateCards() {
             const grid = document.querySelector('.grid');
             const currentLang = document.querySelector('.language-btn.active').dataset.lang;
+            
+            grid.innerHTML = ''; // Limpiar el grid antes de generar las cards
 
-            // Generar 21 cards (3x7)
-            for (let i = 0; i < 21; i++) {
+            resources.forEach(resource => {
                 const template = `
                     <div class="card">
-                        <img src="/api/placeholder/400/225" alt="Resource ${i + 1}">
+                        <img src="${resource.imageUrl}" alt="${resource.title[currentLang]}">
                         <div class="card-content">
-                            <h2 class="card-title" data-en="Resource ${i + 1}" data-es="Recurso ${i + 1}">
-                                ${currentLang === 'es' ? `Recurso ${i + 1}` : `Resource ${i + 1}`}
+                            <h2 class="card-title" data-en="${resource.title.en}" data-es="${resource.title.es}">
+                                ${resource.title[currentLang]}
                             </h2>
-                            <p class="card-description" data-en="Description of resource ${i + 1} in English" data-es="Descripción del recurso ${i + 1} en español">
-                                ${currentLang === 'es' ? 
-                                    `Descripción del recurso ${i + 1} en español` : 
-                                    `Description of resource ${i + 1} in English`}
+                            <p class="card-description" data-en="${resource.description.en}" data-es="${resource.description.es}">
+                                ${resource.description[currentLang]}
                             </p>
-                            <a href="#" class="card-button" data-en="Learn More" data-es="Saber Más">
-                                ${currentLang === 'es' ? 'Saber Más' : 'Learn More'}
+                            <a href="${resource.link}" class="card-button" data-en="${resource.buttonText.en}" data-es="${resource.buttonText.es}">
+                                ${resource.buttonText[currentLang]}
                             </a>
                         </div>
                     </div>
                 `;
                 grid.innerHTML += template;
-            }
+            });
         }
 
         // Cambiar idioma
@@ -219,6 +255,7 @@
                 // Cambiar idioma
                 const lang = btn.dataset.lang;
                 switchLanguage(lang);
+                generateCards(); // Regenerar las cards con el nuevo idioma
             });
         });
 
